@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class TaskManager {
     private int countId;
-    private HashMap<Integer, Task> tasks;
+    private final HashMap<Integer, Task> tasks;
     private final HashMap<Integer, Subtask> subtasks;
     private final HashMap<Integer, Epic> epics;
 
