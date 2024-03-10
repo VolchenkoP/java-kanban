@@ -125,6 +125,12 @@ public class TaskManager {
         }
     }
 
+    public void deleteAll(){
+        tasks.clear();
+        subtasks.clear();
+        epics.clear();
+    }
+
     public void connectEpicAndSubtask(Subtask subtask, Epic epic){
         subtask.setEpicIdForThisSubtask(epic.getId());
         epic.setSubtasksForThisEpic(subtask);
