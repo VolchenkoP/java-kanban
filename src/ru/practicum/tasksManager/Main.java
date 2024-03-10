@@ -1,3 +1,8 @@
+package ru.practicum.tasksManager;
+
+import ru.practicum.tasksManager.model.*;
+import ru.practicum.tasksManager.service.*;
+
 
 public class Main {
 
@@ -5,14 +10,14 @@ public class Main {
         System.out.println("Поехали!");
         TaskManager taskManager = new TaskManager();
 
-        Task task1 = new Task("Task1","Desc1",Status.NEW);
-        Task task2 = new Task("Task2","Desc2",Status.NEW);
+        Task task1 = new Task("Task1", "Desc1", Status.NEW);
+        Task task2 = new Task("Task2", "Desc2", Status.NEW);
 
         taskManager.saveTask(task1);
         taskManager.saveTask(task2);
 
-        Epic epic1 = new Epic("Epic1","Desc1");
-        Epic epic2 = new Epic("Epic2","Desc2");
+        Epic epic1 = new Epic("Epic1", "Desc1");
+        Epic epic2 = new Epic("Epic2", "Desc2");
 
         Subtask subtask1 = new Subtask("Subtask1", "Desk1");
         Subtask subtask2 = new Subtask("Subtask2", "Desk2");

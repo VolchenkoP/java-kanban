@@ -1,3 +1,7 @@
+package ru.practicum.tasksManager.model;
+
+import ru.practicum.tasksManager.service.Status;
+
 import java.util.Objects;
 
 public class Task {
@@ -5,7 +9,6 @@ public class Task {
     private String description;
     private int id;
     private Status status;
-
 
     public Task(String name, String description, Status status) {
         this.name = name;
@@ -46,7 +49,6 @@ public class Task {
         this.id = id;
     }
 
-
     @Override
     public String toString() {
         return getClass() + "{" +
@@ -73,6 +75,5 @@ public class Task {
         }
         return hash;
     }
-
 
 }

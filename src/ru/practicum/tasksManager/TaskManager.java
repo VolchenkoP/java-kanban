@@ -1,14 +1,15 @@
-import java.util.ArrayList;
+package ru.practicum.tasksManager;
+
+import ru.practicum.tasksManager.model.*;
+import ru.practicum.tasksManager.service.Status;
+
 import java.util.HashMap;
-import java.util.Objects;
 
 public class TaskManager {
     private int countId;
     private HashMap<Integer, Task> tasks;
     private final HashMap<Integer, Subtask> subtasks;
     private final HashMap<Integer, Epic> epics;
-
-
 
     public TaskManager() {
         tasks = new HashMap<>();
@@ -31,8 +32,8 @@ public class TaskManager {
         if (!subtasks.containsValue(subtask)) {
             countId++;
             subtask.setId(countId);
-            if (subtask.getEpicIdForThisSubtask() != 0){
-                if (epics.containsKey(subtask.getEpicIdForThisSubtask())){
+            if (subtask.getEpicIdForThisSubtask() != 0) {
+                if (epics.containsKey(subtask.getEpicIdForThisSubtask())) {
                     epics.get(subtask.getEpicIdForThisSubtask()).setSubtasksForThisEpic(subtask);
                 }
             }
@@ -70,15 +71,15 @@ public class TaskManager {
             tasks.remove(id);
         }
         if (epics.containsKey(id)) {
-            for (Integer num : subtasks.keySet()){
-                if (subtasks.get(num).getEpicIdForThisSubtask() == id){
+            for (Integer num : subtasks.keySet()) {
+                if (subtasks.get(num).getEpicIdForThisSubtask() == id) {
                     subtasks.get(num).deleteEpicId();
                 }
             }
             epics.remove(id);
         }
         if (subtasks.containsKey(id)) {
-            if (subtasks.get(id).getEpicIdForThisSubtask() != 0){
+            if (subtasks.get(id).getEpicIdForThisSubtask() != 0) {
                 epics.get(subtasks.get(id).getEpicIdForThisSubtask()).deleteSubtaskForThisEpic(id);
                 changeEpicStatus(epics.get(subtasks.get(id).getEpicIdForThisSubtask()));
             }
@@ -100,56 +101,57 @@ public class TaskManager {
     }
 
     private void changeEpicStatus(Epic epic) {
-        if (epic.getSubtasksForThisEpic() == null){
+        if (epic.getSubtasksForThisEpic() == null) {
             epic.setStatus(Status.NEW);
         } else {
             int countNew = 0;
             int countProgress = 0;
             int countDone = 0;
-            HashMap <Integer, Subtask> forStatus = epic.getSubtasksForThisEpic();
+            HashMap<Integer, Subtask> forStatus = epic.getSubtasksForThisEpic();
             for (Integer num : forStatus.keySet()) {
                 if (forStatus.get(num).getStatus() == Status.NEW) {
                     countNew++;
-                } else if (forStatus.get(num).getStatus() == Status.IN_PROGRESS){
+                } else if (forStatus.get(num).getStatus() == Status.IN_PROGRESS) {
                     countProgress++;
                 } else if (forStatus.get(num).getStatus() == Status.DONE) {
                     countDone++;
                 }
             }
-            if (countProgress != 0){
+            if (countProgress != 0) {
                 epic.setStatus(Status.IN_PROGRESS);
             }
-            if ((countNew == 0) && (countProgress == 0) && (countDone > 0)){
+            if ((countNew == 0) && (countProgress == 0) && (countDone > 0)) {
                 epic.setStatus(Status.DONE);
             }
         }
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         tasks.clear();
         subtasks.clear();
         epics.clear();
     }
 
-    public void connectEpicAndSubtask(Subtask subtask, Epic epic){
+    public void connectEpicAndSubtask(Subtask subtask, Epic epic) {
         subtask.setEpicIdForThisSubtask(epic.getId());
         epic.setSubtasksForThisEpic(subtask);
     }
 
-    public HashMap<Epic, HashMap<Integer, Subtask>> getAllSubtasksByEpic (Epic epic){
-        HashMap<Epic, HashMap<Integer, Subtask>> subtasksByEpic= new HashMap<>();
+    public HashMap<Epic, HashMap<Integer, Subtask>> getAllSubtasksByEpic(Epic epic) {
+        HashMap<Epic, HashMap<Integer, Subtask>> subtasksByEpic = new HashMap<>();
         subtasksByEpic.put(epic, epic.getSubtasksForThisEpic());
         return subtasksByEpic;
     }
 
-    public void printTasks(){
+    public void printTasks() {
         System.out.println(tasks);
     }
-    public void printSubtasks(){
+
+    public void printSubtasks() {
         System.out.println(subtasks);
     }
 
-    public void printEpics(){
+    public void printEpics() {
         System.out.println(epics);
     }
 
