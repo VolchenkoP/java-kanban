@@ -1,7 +1,5 @@
 package ru.practicum.tasksManager.model;
 
-import ru.practicum.tasksManager.service.Status;
-
 import java.util.HashMap;
 
 public class Epic extends Task {

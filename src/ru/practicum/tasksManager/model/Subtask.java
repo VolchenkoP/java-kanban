@@ -1,7 +1,5 @@
 package ru.practicum.tasksManager.model;
 
-import ru.practicum.tasksManager.service.Status;
-
 public class Subtask extends Task {
 
     private int epicIdForThisSubtask;

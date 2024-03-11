@@ -1,7 +1,5 @@
 package ru.practicum.tasksManager.model;
 
-import ru.practicum.tasksManager.service.Status;
-
 import java.util.Objects;
 
 public class Task {

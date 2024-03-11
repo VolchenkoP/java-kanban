@@ -1,8 +1,7 @@
 package ru.practicum.tasksManager;
 
 import ru.practicum.tasksManager.model.*;
-import ru.practicum.tasksManager.service.*;
-
+import ru.practicum.tasksManager.service.TaskManager;
 
 public class Main {
 
@@ -23,38 +22,27 @@ public class Main {
         Subtask subtask2 = new Subtask("Subtask2", "Desk2");
         Subtask subtask3 = new Subtask("Subtask3", "Desk3");
 
+
         taskManager.saveEpic(epic1);
         taskManager.saveEpic(epic2);
+        subtask1.setEpicIdForThisSubtask(epic1.getId());
+        subtask2.setEpicIdForThisSubtask(epic1.getId());
+        subtask3.setEpicIdForThisSubtask(epic2.getId());
 
         taskManager.saveSubtask(subtask1);
         taskManager.saveSubtask(subtask2);
         taskManager.saveSubtask(subtask3);
 
-        taskManager.connectEpicAndSubtask(subtask1, epic1);
-        taskManager.connectEpicAndSubtask(subtask2, epic1);
-        taskManager.connectEpicAndSubtask(subtask3, epic2);
-
-        taskManager.printTasks();
-        taskManager.printSubtasks();
-        taskManager.printEpics();
-
         subtask1.setStatus(Status.DONE);
-        subtask2.setStatus(Status.IN_PROGRESS);
+        subtask2.setStatus(Status.NEW);
         subtask3.setStatus(Status.DONE);
+
         taskManager.updateSubtask(subtask1);
         taskManager.updateSubtask(subtask2);
         taskManager.updateSubtask(subtask3);
-        taskManager.printSubtasks();
-        taskManager.printEpics();
 
-        taskManager.deleteById(6);
-        taskManager.printEpics();
+        taskManager.deleteSubtasks();
 
-        taskManager.deleteById(3);
-        taskManager.printSubtasks();
-        taskManager.printEpics();
-
-        System.out.println(taskManager.getAllSubtasksByEpic(epic2));
     }
 
 }
