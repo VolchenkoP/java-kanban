@@ -33,12 +33,12 @@ public class TaskManager {
         if (!subtasks.containsValue(subtask)) {
             countId++;
             subtask.setId(countId);
-            Epic epicCopy = epics.get(subtask.getEpicIdForThisSubtask());
-            if (epicCopy == null) {
+            Epic epic = epics.get(subtask.getEpicIdForThisSubtask());
+            if (epic == null) {
                 return;
             }
-            epicCopy.addSubtasksForThisEpic(subtask);
-            changeEpicStatus(epicCopy);
+            epic.addSubtasksForThisEpic(subtask);
+            changeEpicStatus(epic);
             subtasks.put(subtask.getId(), subtask);
         } else {
             System.out.println("Такая подзадача уже создана");
@@ -99,24 +99,24 @@ public class TaskManager {
     }
 
     public void updateTask(Task task) {
-        Task taskCopy = tasks.get(task.getId());
-        taskCopy.setName(task.getName());
-        taskCopy.setDescription(task.getDescription());
-        taskCopy.setStatus(task.getStatus());
+        Task taskLink = tasks.get(task.getId());
+        taskLink.setName(task.getName());
+        taskLink.setDescription(task.getDescription());
+        taskLink.setStatus(task.getStatus());
     }
 
     public void updateSubtask(Subtask subtask) {
-        Subtask subtaskCopy = subtasks.get(subtask.getId());
-        subtaskCopy.setName(subtask.getName());
-        subtaskCopy.setDescription(subtask.getDescription());
-        subtaskCopy.setStatus(subtask.getStatus());
+        Subtask subtaskLink = subtasks.get(subtask.getId());
+        subtaskLink.setName(subtask.getName());
+        subtaskLink.setDescription(subtask.getDescription());
+        subtaskLink.setStatus(subtask.getStatus());
         changeEpicStatus(epics.get(subtask.getEpicIdForThisSubtask()));
     }
 
     public void updateEpic(Epic epic) {
-        Epic epicCopy = epics.get(epic.getId());
-        epicCopy.setName(epic.getName());
-        epicCopy.setDescription(epic.getDescription());
+        Epic epicLink = epics.get(epic.getId());
+        epicLink.setName(epic.getName());
+        epicLink.setDescription(epic.getDescription());
     }
 
     public void deleteTasks() {
