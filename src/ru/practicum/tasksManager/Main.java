@@ -33,16 +33,22 @@ public class Main {
         taskManager.saveSubtask(subtask2);
         taskManager.saveSubtask(subtask3);
 
+        System.out.println(taskManager.getEpics());
+        System.out.println();
+
         subtask1.setStatus(Status.DONE);
         subtask2.setStatus(Status.NEW);
-        subtask3.setStatus(Status.DONE);
+        subtask3.setStatus(Status.IN_PROGRESS);
 
         taskManager.updateSubtask(subtask1);
         taskManager.updateSubtask(subtask2);
         taskManager.updateSubtask(subtask3);
 
-        taskManager.deleteSubtasks();
+        System.out.println(taskManager.getEpics());
+        System.out.println();
 
+        taskManager.deleteSubtasks();
+        System.out.println(taskManager.getEpics());
     }
 
 }

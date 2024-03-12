@@ -11,7 +11,7 @@ public class Epic extends Task {
         subtasksForThisEpic = new HashMap<>();
     }
 
-    public void setSubtasksForThisEpic(Subtask subtask) {
+    public void addSubtasksForThisEpic(Subtask subtask) {
         if (!subtasksForThisEpic.containsKey(subtask.getId())) {
             subtasksForThisEpic.put(subtask.getId(), subtask);
         } else {

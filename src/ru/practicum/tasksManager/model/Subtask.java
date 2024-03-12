@@ -21,12 +21,5 @@ public class Subtask extends Task {
         return epicIdForThisSubtask;
     }
 
-    public void deleteEpicId() {
-        if (epicIdForThisSubtask != 0) {
-            epicIdForThisSubtask = 0;
-        } else {
-            System.out.println("У данной подзадачи нет Эпика");
-        }
-    }
 
 }
