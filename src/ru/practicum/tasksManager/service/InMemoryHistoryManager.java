@@ -12,7 +12,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     public void add(Task task) {
         Task taskForHistory = (Task) task.clone();
         taskForHistory.setId(task.getId());
-        if (requestHistory.size() == 10){
+        if (requestHistory.size() == 10) {
             requestHistory.removeFirst();
             requestHistory.add(taskForHistory);
         } else {

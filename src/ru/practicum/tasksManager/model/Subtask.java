@@ -9,16 +9,16 @@ public class Subtask extends Task {
         epicIdForThisSubtask = 0;
     }
 
+    public int getEpicIdForThisSubtask() {
+        return epicIdForThisSubtask;
+    }
+
     public void setEpicIdForThisSubtask(int id) {
         if (epicIdForThisSubtask == 0) {
             epicIdForThisSubtask = id;
         } else {
             System.out.println("У данной подзадачи уже есть Эпик");
         }
-    }
-
-    public int getEpicIdForThisSubtask() {
-        return epicIdForThisSubtask;
     }
 
 

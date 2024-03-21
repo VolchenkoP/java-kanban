@@ -5,7 +5,6 @@ import ru.practicum.tasksManager.model.Subtask;
 import ru.practicum.tasksManager.model.Task;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 public interface TaskManager {

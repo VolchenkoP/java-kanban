@@ -1,8 +1,8 @@
 package ru.practicum.tasksManager;
 
 import ru.practicum.tasksManager.interfaces.TaskManager;
-import ru.practicum.tasksManager.model.*;
-import ru.practicum.tasksManager.service.InMemoryTaskManager;
+import ru.practicum.tasksManager.model.Status;
+import ru.practicum.tasksManager.model.Task;
 import ru.practicum.tasksManager.utilities.Managers;
 
 public class Main {
@@ -18,7 +18,6 @@ public class Main {
         inMemoryTaskManager.saveTask(task2);
 
         System.out.println(inMemoryTaskManager.getTasks());
-        System.out.println(inMemoryTaskManager.getHistory());
         System.out.println();
 
         Task task1Clone = (Task) task1.clone();
@@ -70,10 +69,7 @@ public class Main {
 
         inMemoryTaskManager.deleteSubtasks();
         System.out.println(inMemoryTaskManager.getEpics());
-
         System.out.println();
-
-
 
         System.out.println(inMemoryTaskManager.getHistory()); */
 

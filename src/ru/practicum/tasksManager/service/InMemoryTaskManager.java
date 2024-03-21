@@ -2,8 +2,10 @@ package ru.practicum.tasksManager.service;
 
 import ru.practicum.tasksManager.interfaces.HistoryManager;
 import ru.practicum.tasksManager.interfaces.TaskManager;
-import ru.practicum.tasksManager.model.*;
+import ru.practicum.tasksManager.model.Epic;
 import ru.practicum.tasksManager.model.Status;
+import ru.practicum.tasksManager.model.Subtask;
+import ru.practicum.tasksManager.model.Task;
 import ru.practicum.tasksManager.utilities.Managers;
 
 import java.util.ArrayList;
@@ -12,12 +14,11 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private int countId;
     private final Map<Integer, Task> tasks;
     private final Map<Integer, Subtask> subtasks;
     private final Map<Integer, Epic> epics;
-
     HistoryManager historyManager;
+    private int countId;
 
     public InMemoryTaskManager() {
         tasks = new HashMap<>();
@@ -173,13 +174,13 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public LinkedList<Task> getHistory(){
+    public LinkedList<Task> getHistory() {
         return historyManager.getHistory();
     }
 
     @Override
-    public  void setEpicIdToSub(int id, Subtask subtask){
-        if(epics.containsKey(id)){
+    public void setEpicIdToSub(int id, Subtask subtask) {
+        if (epics.containsKey(id)) {
             subtask.setEpicIdForThisSubtask(id);
         } else {
             System.out.println("Данный ID не принадлежит Эпику");
