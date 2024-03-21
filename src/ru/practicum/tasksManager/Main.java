@@ -1,19 +1,39 @@
 package ru.practicum.tasksManager;
 
+import ru.practicum.tasksManager.interfaces.TaskManager;
 import ru.practicum.tasksManager.model.*;
-import ru.practicum.tasksManager.service.TaskManager;
+import ru.practicum.tasksManager.service.InMemoryTaskManager;
+import ru.practicum.tasksManager.utilities.Managers;
 
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("Поехали!");
-        TaskManager taskManager = new TaskManager();
+        TaskManager inMemoryTaskManager = Managers.getDefault();
 
         Task task1 = new Task("Task1", "Desc1", Status.NEW);
         Task task2 = new Task("Task2", "Desc2", Status.NEW);
 
-        taskManager.saveTask(task1);
-        taskManager.saveTask(task2);
+        inMemoryTaskManager.saveTask(task1);
+        inMemoryTaskManager.saveTask(task2);
+
+        System.out.println(inMemoryTaskManager.getTasks());
+        System.out.println(inMemoryTaskManager.getHistory());
+        System.out.println();
+
+        Task task1Clone = (Task) task1.clone();
+        Task task2Clone = (Task) task2.clone();
+
+        task1Clone.setStatus(Status.IN_PROGRESS);
+        task2Clone.setStatus(Status.DONE);
+
+        inMemoryTaskManager.updateTask(task1Clone);
+        inMemoryTaskManager.updateTask(task2Clone);
+
+        System.out.println(inMemoryTaskManager.getTasks());
+        System.out.println(inMemoryTaskManager.getHistory());
+
+        /*
 
         Epic epic1 = new Epic("Epic1", "Desc1");
         Epic epic2 = new Epic("Epic2", "Desc2");
@@ -23,32 +43,40 @@ public class Main {
         Subtask subtask3 = new Subtask("Subtask3", "Desk3");
 
 
-        taskManager.saveEpic(epic1);
-        taskManager.saveEpic(epic2);
-        subtask1.setEpicIdForThisSubtask(epic1.getId());
-        subtask2.setEpicIdForThisSubtask(epic1.getId());
-        subtask3.setEpicIdForThisSubtask(epic2.getId());
+        inMemoryTaskManager.saveEpic(epic1);
+        inMemoryTaskManager.saveEpic(epic2);
+        inMemoryTaskManager.setEpicIdToSub(epic1.getId(), subtask1);
+        inMemoryTaskManager.setEpicIdToSub(epic1.getId(), subtask2);
+        inMemoryTaskManager.setEpicIdToSub(epic2.getId(), subtask3);
 
-        taskManager.saveSubtask(subtask1);
-        taskManager.saveSubtask(subtask2);
-        taskManager.saveSubtask(subtask3);
+        inMemoryTaskManager.saveSubtask(subtask1);
+        inMemoryTaskManager.saveSubtask(subtask2);
+        inMemoryTaskManager.saveSubtask(subtask3);
 
-        System.out.println(taskManager.getEpics());
+        System.out.println(inMemoryTaskManager.getSubtasks());
         System.out.println();
 
-        subtask1.setStatus(Status.DONE);
-        subtask2.setStatus(Status.NEW);
-        subtask3.setStatus(Status.IN_PROGRESS);
+        Subtask subtask1Clone = (Subtask) subtask1.clone();
+        Subtask subtask3Clone = (Subtask) subtask3.clone();
 
-        taskManager.updateSubtask(subtask1);
-        taskManager.updateSubtask(subtask2);
-        taskManager.updateSubtask(subtask3);
+        subtask1Clone.setStatus(Status.IN_PROGRESS);
+        subtask3Clone.setStatus(Status.DONE);
+        inMemoryTaskManager.updateSubtask(subtask1Clone);
+        inMemoryTaskManager.updateSubtask(subtask3Clone);
 
-        System.out.println(taskManager.getEpics());
+        System.out.println(inMemoryTaskManager.getEpics());
+        System.out.println(inMemoryTaskManager.getSubtasks());
         System.out.println();
 
-        taskManager.deleteSubtasks();
-        System.out.println(taskManager.getEpics());
+        inMemoryTaskManager.deleteSubtasks();
+        System.out.println(inMemoryTaskManager.getEpics());
+
+        System.out.println();
+
+
+
+        System.out.println(inMemoryTaskManager.getHistory()); */
+
     }
 
 }

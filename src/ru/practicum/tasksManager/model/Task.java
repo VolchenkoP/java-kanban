@@ -2,7 +2,7 @@ package ru.practicum.tasksManager.model;
 
 import java.util.Objects;
 
-public class Task {
+public class Task implements Cloneable{
     private String name;
     private String description;
     private int id;
@@ -57,21 +57,28 @@ public class Task {
                 '}';
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id);
+        return id == task.id;
     }
 
     @Override
     public int hashCode() {
-        int hash = 17;
-        if (id != 0) {
-            hash = hash + Objects.hash(id) * 31;
-        }
-        return hash;
+        return Objects.hash(name, description, id, status);
     }
+
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
