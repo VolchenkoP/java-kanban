@@ -1,12 +1,13 @@
 package ru.practicum.tasksManager.model;
 
 import org.junit.jupiter.api.Test;
-import ru.practicum.tasksManager.interfaces.TaskManager;
+import ru.practicum.tasksManager.service.TaskManager;
 import ru.practicum.tasksManager.utilities.Managers;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TaskTest {
 
