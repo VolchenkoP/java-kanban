@@ -39,7 +39,6 @@ public class Main {
         Subtask subtask2 = new Subtask("Subtask2", "Desk2");
         Subtask subtask3 = new Subtask("Subtask3", "Desk3");
 
-
         inMemoryTaskManager.saveEpic(epic1);
         inMemoryTaskManager.saveEpic(epic2);
         subtask1.setEpicIdForThisSubtask(epic1.getId());
@@ -64,7 +63,6 @@ public class Main {
         System.out.println(inMemoryTaskManager.getEpics());
         System.out.println(inMemoryTaskManager.getSubtasks());
         System.out.println();
-
 
         inMemoryTaskManager.getEpicById(epic1.getId());
         inMemoryTaskManager.getEpicById(epic1.getId());
