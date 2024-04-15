@@ -1,25 +1,25 @@
-package ru.practicum.tasksManager.service.impl;
+package ru.practicum.tasksManager.service;
 
 import org.junit.jupiter.api.Test;
+import ru.practicum.tasksManager.interfaces.HistoryManager;
+import ru.practicum.tasksManager.interfaces.TaskManager;
 import ru.practicum.tasksManager.model.Epic;
 import ru.practicum.tasksManager.model.Status;
 import ru.practicum.tasksManager.model.Subtask;
 import ru.practicum.tasksManager.model.Task;
-import ru.practicum.tasksManager.service.TaskManager;
 import ru.practicum.tasksManager.utilities.Managers;
 
+import javax.crypto.MacSpi;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryTaskManagerTest {
-
+class InMemoryTaskManagerTest  {
 
     @Test
-    void equalsTwoTasksWithOneId() {
-        Task taskOne = new Task("Task1", "Desc1", Status.NEW);
-        Task taskTwo = new Task("Task2", "Desc2", Status.IN_PROGRESS);
+    void equalsTwoTasksWithOneId(){
+        Task taskOne = new Task("Task1", "Desc1",Status.NEW);
+        Task taskTwo = new Task("Task2", "Desc2",Status.IN_PROGRESS);
 
         taskOne.setId(1);
         taskTwo.setId(1);
@@ -27,9 +27,8 @@ class InMemoryTaskManagerTest {
         assertEquals(taskOne, taskTwo, "Ошибка сравнения по ID");
 
     }
-
     @Test
-    void equalsTwoEpicsWithOneId() {
+    void equalsTwoEpicsWithOneId(){
         Epic epicOne = new Epic("epic1", "Desc1");
         Epic epicTwo = new Epic("epic2", "Desc2");
 
@@ -41,7 +40,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void equalsTwoSubtaskWithOneId() {
+    void equalsTwoSubtaskWithOneId(){
         Subtask subtaskOne = new Subtask("Subtask1", "Desc1");
         Subtask subtaskTwo = new Subtask("Subtask2", "Desc2");
 
@@ -69,7 +68,7 @@ class InMemoryTaskManagerTest {
 
         assertNotNull(tasks, "Задачи не возвращаются.");
         assertEquals(1, tasks.size(), "Неверное количество задач.");
-        assertEquals(task, tasks.getFirst(), "Задачи не совпадают.");
+        assertEquals(task, tasks.get(0), "Задачи не совпадают.");
     }
 
     @Test
@@ -89,7 +88,7 @@ class InMemoryTaskManagerTest {
 
         assertNotNull(epics, "Задачи не возвращаются.");
         assertEquals(1, epics.size(), "Неверное количество задач.");
-        assertEquals(epic, epics.getFirst(), "Задачи не совпадают.");
+        assertEquals(epic, epics.get(0), "Задачи не совпадают.");
     }
 
 

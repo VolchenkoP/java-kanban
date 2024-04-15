@@ -1,10 +1,9 @@
 package ru.practicum.tasksManager.model;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class Epic extends Task {
-    private final Map<Integer, Subtask> subtasksForThisEpic;
+    private final HashMap<Integer, Subtask> subtasksForThisEpic;
 
     public Epic(String name, String description) {
         super(name, description, Status.NEW);
@@ -28,7 +27,7 @@ public class Epic extends Task {
         }
     }
 
-    public Map<Integer, Subtask> getSubtasksForThisEpic() {
+    public HashMap<Integer, Subtask> getSubtasksForThisEpic() {
         return subtasksForThisEpic;
     }
 

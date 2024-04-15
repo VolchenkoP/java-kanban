@@ -1,10 +1,11 @@
-package ru.practicum.tasksManager.service;
+package ru.practicum.tasksManager.interfaces;
 
 import ru.practicum.tasksManager.model.Epic;
 import ru.practicum.tasksManager.model.Subtask;
 import ru.practicum.tasksManager.model.Task;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public interface TaskManager {
 
@@ -14,11 +15,11 @@ public interface TaskManager {
 
     void saveEpic(Epic epic);
 
-    List<Task> getTasks();
+    ArrayList<Task> getTasks();
 
-    List<Subtask> getSubtasks();
+    ArrayList<Subtask> getSubtasks();
 
-    List<Epic> getEpics();
+    ArrayList<Epic> getEpics();
 
     Task getTaskById(int id);
 
@@ -40,9 +41,10 @@ public interface TaskManager {
 
     void deleteEpics();
 
-    List<Subtask> getAllSubtasksByEpic(int id);
+    ArrayList<Subtask> getAllSubtasksByEpic(int id);
 
-    List<Task> getHistory();
+    LinkedList<Task> getHistory();
 
+    void setEpicIdToSub(int id, Subtask subtask);
 
 }

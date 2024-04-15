@@ -1,14 +1,11 @@
 package ru.practicum.tasksManager.utilities;
 
-import ru.practicum.tasksManager.service.HistoryManager;
-import ru.practicum.tasksManager.service.TaskManager;
-import ru.practicum.tasksManager.service.impl.InMemoryHistoryManager;
-import ru.practicum.tasksManager.service.impl.InMemoryTaskManager;
+import ru.practicum.tasksManager.interfaces.HistoryManager;
+import ru.practicum.tasksManager.interfaces.TaskManager;
+import ru.practicum.tasksManager.service.InMemoryHistoryManager;
+import ru.practicum.tasksManager.service.InMemoryTaskManager;
 
 public class Managers {
-
-    private Managers() {
-    }
 
     public static TaskManager getDefault() {
         return new InMemoryTaskManager();

@@ -1,10 +1,8 @@
 package ru.practicum.tasksManager;
 
-import ru.practicum.tasksManager.model.Epic;
+import ru.practicum.tasksManager.interfaces.TaskManager;
 import ru.practicum.tasksManager.model.Status;
-import ru.practicum.tasksManager.model.Subtask;
 import ru.practicum.tasksManager.model.Task;
-import ru.practicum.tasksManager.service.TaskManager;
 import ru.practicum.tasksManager.utilities.Managers;
 
 public class Main {
@@ -34,6 +32,8 @@ public class Main {
         System.out.println(inMemoryTaskManager.getTasks());
         System.out.println(inMemoryTaskManager.getHistory());
 
+        /*
+
         Epic epic1 = new Epic("Epic1", "Desc1");
         Epic epic2 = new Epic("Epic2", "Desc2");
 
@@ -44,9 +44,9 @@ public class Main {
 
         inMemoryTaskManager.saveEpic(epic1);
         inMemoryTaskManager.saveEpic(epic2);
-        subtask1.setEpicIdForThisSubtask(epic1.getId());
-        subtask2.setEpicIdForThisSubtask(epic1.getId());
-        subtask3.setEpicIdForThisSubtask(epic2.getId());
+        inMemoryTaskManager.setEpicIdToSub(epic1.getId(), subtask1);
+        inMemoryTaskManager.setEpicIdToSub(epic1.getId(), subtask2);
+        inMemoryTaskManager.setEpicIdToSub(epic2.getId(), subtask3);
 
         inMemoryTaskManager.saveSubtask(subtask1);
         inMemoryTaskManager.saveSubtask(subtask2);
@@ -71,7 +71,7 @@ public class Main {
         System.out.println(inMemoryTaskManager.getEpics());
         System.out.println();
 
-        System.out.println(inMemoryTaskManager.getHistory());
+        System.out.println(inMemoryTaskManager.getHistory()); */
 
     }
 
