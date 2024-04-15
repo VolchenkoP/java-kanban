@@ -6,8 +6,8 @@ import ru.practicum.tasksManager.service.HistoryManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private final Map<Integer, Node> requestHistory = new HashMap();
@@ -15,12 +15,12 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node head;
     private Node tail;
 
-    private Node newNode(Task task){
-        if (head == null){
+    private Node newNode(Task task) {
+        if (head == null) {
             head = new Node(null, task, null);
             return head;
-        } else if (tail == null){
-            tail = new Node(head, task,null);
+        } else if (tail == null) {
+            tail = new Node(head, task, null);
             head.setNext(tail);
             return tail;
         } else {
@@ -32,18 +32,18 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
-    private void removeNode(Node node){
-        if (node == null){
+    private void removeNode(Node node) {
+        if (node == null) {
             return;
         } else {
             Node prev = node.getPrev();
             Node next = node.getNext();
 
-            if (node == head){
+            if (node == head) {
                 head = next;
             }
 
-            if (node == tail){
+            if (node == tail) {
                 tail = prev;
             }
 
@@ -59,16 +59,16 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void addToHistory(Task task) {
-            int taskId = task.getId();
-            if (requestHistory.containsKey(taskId)){
-                removeNode(requestHistory.get(taskId));
-                requestHistory.remove(taskId);
-            }
-            requestHistory.put(taskId, newNode(task));
+        int taskId = task.getId();
+        if (requestHistory.containsKey(taskId)) {
+            removeNode(requestHistory.get(taskId));
+            requestHistory.remove(taskId);
+        }
+        requestHistory.put(taskId, newNode(task));
     }
 
     @Override
-    public void removeFromHistory(int id){
+    public void removeFromHistory(int id) {
         Node node = requestHistory.get(id);
         requestHistory.remove(id);
         removeNode(node);
@@ -78,7 +78,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     public List<Task> getHistory() {
         List<Task> history = new ArrayList<>();
         Node node = head;
-        while (node != null){
+        while (node != null) {
             history.add(node.getTask());
             node = node.getNext();
         }

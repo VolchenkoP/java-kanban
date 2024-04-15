@@ -8,7 +8,8 @@ import ru.practicum.tasksManager.utilities.Managers;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class InMemoryHistoryManagerTest {
 
@@ -37,7 +38,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void delete(){
+    void delete() {
         HistoryManager historyManager = Managers.getDefaultHistory();
         Task task = new Task("Test addNewTask", "Test addNewTask description", Status.NEW);
         historyManager.addToHistory(task);

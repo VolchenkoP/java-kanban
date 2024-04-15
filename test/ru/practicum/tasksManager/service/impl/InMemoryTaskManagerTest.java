@@ -93,7 +93,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void deleteSubtask(){
+    void deleteSubtask() {
         TaskManager taskManager = Managers.getDefault();
         Epic epic = new Epic("Test addNewEpic", "Test addNewEpic description");
         Subtask subtask = new Subtask("Subtask1", "Desk1");
