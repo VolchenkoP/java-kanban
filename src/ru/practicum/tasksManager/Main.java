@@ -15,12 +15,11 @@ public class Main {
 
         Task task1 = new Task("Task1", "Desc1", Status.NEW);
         Task task2 = new Task("Task2", "Desc2", Status.NEW);
+        Task task3 = new Task("Task3", "Desc3", Status.NEW);
 
         inMemoryTaskManager.saveTask(task1);
         inMemoryTaskManager.saveTask(task2);
-
-        System.out.println(inMemoryTaskManager.getTasks());
-        System.out.println();
+        inMemoryTaskManager.saveTask(task3);
 
         Task task1Clone = (Task) task1.clone();
         Task task2Clone = (Task) task2.clone();
@@ -32,7 +31,6 @@ public class Main {
         inMemoryTaskManager.updateTask(task2Clone);
 
         System.out.println(inMemoryTaskManager.getTasks());
-        System.out.println(inMemoryTaskManager.getHistory());
 
         Epic epic1 = new Epic("Epic1", "Desc1");
         Epic epic2 = new Epic("Epic2", "Desc2");
@@ -46,7 +44,7 @@ public class Main {
         inMemoryTaskManager.saveEpic(epic2);
         subtask1.setEpicIdForThisSubtask(epic1.getId());
         subtask2.setEpicIdForThisSubtask(epic1.getId());
-        subtask3.setEpicIdForThisSubtask(epic2.getId());
+        subtask3.setEpicIdForThisSubtask(epic1.getId());
 
         inMemoryTaskManager.saveSubtask(subtask1);
         inMemoryTaskManager.saveSubtask(subtask2);
@@ -67,10 +65,20 @@ public class Main {
         System.out.println(inMemoryTaskManager.getSubtasks());
         System.out.println();
 
-        inMemoryTaskManager.deleteSubtasks();
-        System.out.println(inMemoryTaskManager.getEpics());
+
+        inMemoryTaskManager.getEpicById(epic1.getId());
+        inMemoryTaskManager.getEpicById(epic1.getId());
+        inMemoryTaskManager.getEpicById(epic1.getId());
+        inMemoryTaskManager.getEpicById(epic2.getId());
+        inMemoryTaskManager.getTaskById(task1.getId());
+        inMemoryTaskManager.getTaskById(task2.getId());
+        inMemoryTaskManager.getTaskById(task3.getId());
+        inMemoryTaskManager.getEpicById(epic1.getId());
+        inMemoryTaskManager.getSubtaskById(subtask2.getId());
+        System.out.println(inMemoryTaskManager.getHistory());
         System.out.println();
 
+        inMemoryTaskManager.deleteById(epic1.getId());
         System.out.println(inMemoryTaskManager.getHistory());
 
     }
