@@ -111,7 +111,9 @@ public class InMemoryTaskManager implements TaskManager {
         } else if (epics.containsKey(id)) {
             Map<Integer, Subtask> epicSubtasks = epics.get(id).getSubtasksForThisEpic();
             for (Integer subtasksId : epicSubtasks.keySet()) {
+                subtasks.get(subtasksId).removeEpicId();
                 subtasks.remove(subtasksId);
+                historyManager.removeFromHistory(subtasksId);
             }
             epics.remove(id);
         } else if (subtasks.containsKey(id)) {
@@ -120,7 +122,9 @@ public class InMemoryTaskManager implements TaskManager {
             epic.deleteSubtaskForThisEpic(id);
             changeEpicStatus(epic);
             subtasks.remove(id);
+            subtask.removeEpicId();
         }
+        historyManager.removeFromHistory(id);
     }
 
     @Override
