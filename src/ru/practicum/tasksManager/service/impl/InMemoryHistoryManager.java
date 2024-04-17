@@ -1,31 +1,55 @@
 package ru.practicum.tasksManager.service.impl;
 
-import ru.practicum.tasksManager.model.Node;
 import ru.practicum.tasksManager.model.Task;
 import ru.practicum.tasksManager.service.HistoryManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private final Map<Integer, Node> requestHistory = new HashMap();
-
     private Node head;
     private Node tail;
 
+    @Override
+    public void addToHistory(Task task) {
+        if (task != null) {
+            int taskId = task.getId();
+            if (requestHistory.containsKey(taskId)) {
+                removeNode(requestHistory.remove(taskId));
+            }
+            requestHistory.put(taskId, newNode(task));
+        }
+    }
+
+    @Override
+    public void removeFromHistory(int id) {
+        Node node = requestHistory.get(id);
+        removeNode(requestHistory.remove(id));
+    }
+
+    @Override
+    public List<Task> getHistory() {
+        List<Task> history = new ArrayList<>();
+        Node node = head;
+        while (node != null) {
+            history.add(node.getTask());
+            node = node.getNext();
+        }
+        return history;
+    }
+
     private Node newNode(Task task) {
+        final Node node = new Node(tail, task, null);
+
         if (head == null) {
-            head = new Node(null, task, null);
-            return head;
+            return head = node;
         } else if (tail == null) {
-            tail = new Node(head, task, null);
+            tail = node;
             head.setNext(tail);
             return tail;
         } else {
             final Node prevNode = tail;
-            Node node = new Node(prevNode, task, null);
+            tail = new Node(prevNode, task, null);
             prevNode.setNext(node);
             tail = node;
             return node;
@@ -57,31 +81,51 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
-    @Override
-    public void addToHistory(Task task) {
-        int taskId = task.getId();
-        if (requestHistory.containsKey(taskId)) {
-            removeNode(requestHistory.get(taskId));
-            requestHistory.remove(taskId);
+    private static class Node {
+        public Task task;
+        public Node next;
+        public Node prev;
+
+        public Node(Node prev, Task task, Node next) {
+            this.prev = prev;
+            this.task = task;
+            this.next = next;
         }
-        requestHistory.put(taskId, newNode(task));
+
+        public Task getTask() {
+            return task;
+        }
+
+        public Node getNext() {
+            return next;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
+        }
+
+        public Node getPrev() {
+            return prev;
+        }
+
+        public void setPrev(Node prev) {
+            this.prev = prev;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node node = (Node) o;
+            return Objects.equals(task, node.task);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(task);
+        }
+
     }
 
-    @Override
-    public void removeFromHistory(int id) {
-        Node node = requestHistory.get(id);
-        requestHistory.remove(id);
-        removeNode(node);
-    }
 
-    @Override
-    public List<Task> getHistory() {
-        List<Task> history = new ArrayList<>();
-        Node node = head;
-        while (node != null) {
-            history.add(node.getTask());
-            node = node.getNext();
-        }
-        return history;
-    }
 }

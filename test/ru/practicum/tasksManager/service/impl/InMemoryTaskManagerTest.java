@@ -108,10 +108,6 @@ class InMemoryTaskManagerTest {
 
         assertEquals(0, checkSubtasksListSize, "После удаления эпика подзадача "
                 + "не удалилась");
-        assertEquals(0, subtask.getEpicIdForThisSubtask(), "Подзадача хранит Id epica "
-                + "после удаления");
-
     }
-
 
 }

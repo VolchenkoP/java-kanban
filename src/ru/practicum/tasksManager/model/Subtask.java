@@ -21,9 +21,4 @@ public class Subtask extends Task {
         }
     }
 
-    public void removeEpicId() {
-        epicIdForThisSubtask = 0;
-    }
-
-
 }
