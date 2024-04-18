@@ -38,7 +38,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private Node newNode(Task task) {
         final Node node = new Node(tail, task, null);
-        
         if (tail == null) {
             head = node;
         } else {
