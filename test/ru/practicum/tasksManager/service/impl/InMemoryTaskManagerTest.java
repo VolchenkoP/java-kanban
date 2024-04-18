@@ -73,7 +73,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void addNewSubtask() {
+    void addNewEpic() {
         TaskManager taskManager = Managers.getDefault();
         Epic epic = new Epic("Test addNewEpic", "Test addNewEpic description");
         taskManager.saveEpic(epic);
@@ -92,5 +92,22 @@ class InMemoryTaskManagerTest {
         assertEquals(epic, epics.getFirst(), "Задачи не совпадают.");
     }
 
+    @Test
+    void deleteSubtask() {
+        TaskManager taskManager = Managers.getDefault();
+        Epic epic = new Epic("Test addNewEpic", "Test addNewEpic description");
+        Subtask subtask = new Subtask("Subtask1", "Desk1");
+
+        taskManager.saveEpic(epic);
+        subtask.setEpicIdForThisSubtask(epic.getId());
+
+        taskManager.saveSubtask(subtask);
+
+        taskManager.deleteById(epic.getId());
+        final int checkSubtasksListSize = taskManager.getSubtasks().size();
+
+        assertEquals(0, checkSubtasksListSize, "После удаления эпика подзадача "
+                + "не удалилась");
+    }
 
 }
