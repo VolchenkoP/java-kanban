@@ -19,7 +19,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class FileBackedTaskManagerTest {
 
-    File file = new File("/Users/pavelvolcenko/Documents", "data.txt");
+    File file;
+    {
+        try {
+            file = File.createTempFile("data", ".txt");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Test
     void addNewTask() {
