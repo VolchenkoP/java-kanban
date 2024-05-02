@@ -25,8 +25,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         fileBackedTaskManager.readTasksFromFile();
         return fileBackedTaskManager;
     }
-
-
+    
     @Override
     public void saveTask(Task task) {
         super.saveTask(task);
@@ -140,6 +139,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 Task task = new Task(name, description, getStatus(status));
                 id = Integer.parseInt(idEx);
                 task.setId(id);
+                task.setTypeOfTask(TypeOfTask.TASK);
                 tasks.put(id, task);
                 break;
             case "EPIC":
@@ -152,6 +152,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     }
                 }
                 changeEpicStatus(epic);
+                epic.setTypeOfTask(TypeOfTask.EPIC);
                 epics.put(id, epic);
                 break;
             default:
@@ -160,6 +161,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 subtask.setEpicIdForThisSubtask(Integer.parseInt(idEpicForSub.trim()));
                 id = Integer.parseInt(idEx);
                 subtask.setId(id);
+                subtask.setTypeOfTask(TypeOfTask.SUBTASK);
                 subtasks.put(id, subtask);
                 Epic epicSaved = epics.get(subtask.getEpicIdForThisSubtask());
                 if (epicSaved == null) {
@@ -192,14 +194,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private String convertTaskToString(Task example) {
         String idEx = String.valueOf(example.getId());
-        String type;
-        if (getEpics().contains(example)) {
-            type = String.valueOf(TypeOfTask.EPIC);
-        } else if (getSubtasks().contains(example)) {
-            type = String.valueOf(TypeOfTask.SUBTASK);
-        } else {
-            type = String.valueOf(TypeOfTask.TASK);
-        }
+        String type = String.valueOf(example.getTypeOfTask());
         String name = example.getName();
         String status = String.valueOf(example.getStatus());
         String desc = example.getDescription();
