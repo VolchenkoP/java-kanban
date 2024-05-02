@@ -47,11 +47,11 @@ public class Task implements Cloneable {
         this.status = status;
     }
 
-    public TypeOfTask getTypeOfTask(){
+    public TypeOfTask getTypeOfTask() {
         return type;
     }
 
-    public void setTypeOfTask(TypeOfTask typeOfTask){
+    public void setTypeOfTask(TypeOfTask typeOfTask) {
         this.type = typeOfTask;
     }
 
