@@ -22,7 +22,11 @@ public class Managers {
     }
 
     public static FileBackedTaskManager getDefaultFileManager(File file) {
-        return new FileBackedTaskManager(file);
+        return FileBackedTaskManager.newFileBackedTaskManager(file);
+    }
+
+    public static FileBackedTaskManager getLoadedFileManager(File file) {
+        return FileBackedTaskManager.loadTaskManagerFromFile(file);
     }
 
 }

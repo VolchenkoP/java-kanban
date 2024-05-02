@@ -124,11 +124,20 @@ public class Main {
 
         fileTaskManager.getEpicById(epic1.getId());
         fileTaskManager.getSubtaskById(subtask1.getId());
+        Task task22 = new Task("Task1", "Desc1", Status.NEW);
+        ;
+
+        fileTaskManager.saveTask(task22);
 
         System.out.println(fileTaskManager.getTasks());
         System.out.println(fileTaskManager.getEpics());
         System.out.println(fileTaskManager.getSubtasks());
 
+        FileBackedTaskManager fileTaskManager2 = Managers.getLoadedFileManager(file);
+
+        System.out.println(fileTaskManager2.getTasks());
+        System.out.println(fileTaskManager2.getEpics());
+        System.out.println(fileTaskManager2.getSubtasks());
 
     }
 

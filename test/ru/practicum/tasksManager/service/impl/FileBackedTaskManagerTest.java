@@ -1,7 +1,7 @@
 package ru.practicum.tasksManager.service.impl;
 
 import org.junit.jupiter.api.Test;
-import ru.practicum.tasksManager.exeption.ManagerSaveException;
+import ru.practicum.tasksManager.exception.ManagerSaveException;
 import ru.practicum.tasksManager.model.Epic;
 import ru.practicum.tasksManager.model.Status;
 import ru.practicum.tasksManager.model.Subtask;
@@ -18,24 +18,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class FileBackedTaskManagerTest {
+    private final File file;
 
-    File file;
     {
         try {
             file = File.createTempFile("data", ".txt");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ManagerSaveException("Ошибка создания файла в тесте FileBackedTaskManagerTest");
         }
     }
 
     @Test
-    void addNewTask() {
+    void addNewTask() throws ManagerSaveException {
         FileBackedTaskManager fileBackedTaskManager = Managers.getDefaultFileManager(file);
         Task task = new Task("Test addNewTask", "Test addNewTask description", Status.NEW);
         fileBackedTaskManager.saveTask(task);
 
         final int taskId = task.getId();
-
         final Task savedTask = fileBackedTaskManager.getTaskById(taskId);
 
         assertNotNull(savedTask, "Задача не найдена.");
@@ -51,10 +50,8 @@ class FileBackedTaskManagerTest {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileBackedTaskManager.getFileToHistory()));
             writer.write("");
             writer.close();
-        } catch (ManagerSaveException e) {
-            e.getMessage();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ManagerSaveException("Ошибка записи для очистки файла при тесте задачи");
         }
     }
 
@@ -66,26 +63,23 @@ class FileBackedTaskManagerTest {
         fileBackedTaskManager.saveEpic(epic);
 
         final int epicId = epic.getId();
-
         final Epic savedEpic = fileBackedTaskManager.getEpicById(epicId);
 
-        assertNotNull(savedEpic, "Задача не найдена.");
-        assertEquals(epic, savedEpic, "Задачи не совпадают.");
+        assertNotNull(savedEpic, "Эпик не найден.");
+        assertEquals(epic, savedEpic, "Эпики не совпадают.");
 
         final List<Epic> epics = fileBackedTaskManager.getEpics();
 
-        assertNotNull(epics, "Задачи не возвращаются.");
-        assertEquals(1, epics.size(), "Неверное количество задач.");
-        assertEquals(epic, epics.getFirst(), "Задачи не совпадают.");
+        assertNotNull(epics, "Эпики не возвращаются.");
+        assertEquals(1, epics.size(), "Неверное количество эпиков.");
+        assertEquals(epic, epics.getFirst(), "Эпики не совпадают.");
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileBackedTaskManager.getFileToHistory()));
             writer.write("");
             writer.close();
-        } catch (ManagerSaveException e) {
-            e.getMessage();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ManagerSaveException("Ошибка записи для очистки файла при тесте эпика");
         }
     }
 
@@ -110,10 +104,8 @@ class FileBackedTaskManagerTest {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileBackedTaskManager.getFileToHistory()));
             writer.write("");
             writer.close();
-        } catch (ManagerSaveException e) {
-            e.getMessage();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ManagerSaveException("Ошибка записи для отчистки файла при тесте удаления подзадачи");
         }
     }
 
@@ -123,7 +115,7 @@ class FileBackedTaskManagerTest {
         FileBackedTaskManager fileBackedTaskManager = Managers.getDefaultFileManager(file);
         fileBackedTaskManager.saveEpic(epic);
         final List<Epic> forTest = fileBackedTaskManager.getEpics();
-        FileBackedTaskManager fileBackedTaskManagerAnother = Managers.getDefaultFileManager(file);
+        FileBackedTaskManager fileBackedTaskManagerAnother = Managers.getLoadedFileManager(file);
         final List<Epic> forTestAnother = fileBackedTaskManagerAnother.getEpics();
         assertEquals(forTest, forTestAnother, "Списки не совпадают.");
 
@@ -131,10 +123,8 @@ class FileBackedTaskManagerTest {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileBackedTaskManager.getFileToHistory()));
             writer.write("");
             writer.close();
-        } catch (ManagerSaveException e) {
-            e.getMessage();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ManagerSaveException("Ошибка записи для отчистки файла при тесте записи и загурзкис файлом");
         }
     }
 
