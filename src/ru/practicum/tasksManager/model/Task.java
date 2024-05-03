@@ -7,6 +7,7 @@ public class Task implements Cloneable {
     private String description;
     private int id;
     private Status status;
+    private TypeOfTask type;
 
     public Task(String name, String description, Status status) {
         this.name = name;
@@ -46,6 +47,14 @@ public class Task implements Cloneable {
         this.status = status;
     }
 
+    public TypeOfTask getTypeOfTask() {
+        return type;
+    }
+
+    public void setTypeOfTask(TypeOfTask typeOfTask) {
+        this.type = typeOfTask;
+    }
+
     @Override
     public String toString() {
         return getClass() + "{" +
@@ -55,7 +64,6 @@ public class Task implements Cloneable {
                 ", status=" + status +
                 '}';
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -78,6 +86,5 @@ public class Task implements Cloneable {
             throw new RuntimeException(e);
         }
     }
-
 
 }

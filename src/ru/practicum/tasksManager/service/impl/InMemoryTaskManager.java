@@ -1,9 +1,6 @@
 package ru.practicum.tasksManager.service.impl;
 
-import ru.practicum.tasksManager.model.Epic;
-import ru.practicum.tasksManager.model.Status;
-import ru.practicum.tasksManager.model.Subtask;
-import ru.practicum.tasksManager.model.Task;
+import ru.practicum.tasksManager.model.*;
 import ru.practicum.tasksManager.service.HistoryManager;
 import ru.practicum.tasksManager.service.TaskManager;
 import ru.practicum.tasksManager.utilities.Managers;
@@ -14,11 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final Map<Integer, Task> tasks;
-    private final Map<Integer, Subtask> subtasks;
-    private final Map<Integer, Epic> epics;
-    private final HistoryManager historyManager;
-    private int countId;
+    final Map<Integer, Task> tasks;
+    final Map<Integer, Subtask> subtasks;
+    final Map<Integer, Epic> epics;
+    final HistoryManager historyManager;
+    int countId;
 
     public InMemoryTaskManager() {
         tasks = new HashMap<>();
@@ -33,6 +30,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (!tasks.containsValue(task)) {
             countId++;
             task.setId(countId);
+            task.setTypeOfTask(TypeOfTask.TASK);
             tasks.put(task.getId(), task);
         } else {
             System.out.println("Такая задача уже создана");
@@ -50,6 +48,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
             epic.addSubtasksForThisEpic(subtask);
             changeEpicStatus(epic);
+            subtask.setTypeOfTask(TypeOfTask.SUBTASK);
             subtasks.put(subtask.getId(), subtask);
         } else {
             System.out.println("Такая подзадача уже создана");
@@ -62,6 +61,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (!epics.containsValue(epic)) {
             countId++;
             epic.setId(countId);
+            epic.setTypeOfTask(TypeOfTask.EPIC);
             epics.put(epic.getId(), epic);
         } else {
             System.out.println("Такой эпик уже создан");
@@ -187,11 +187,16 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(subtasksByEpic.values());
     }
 
+    @Override
+    public int getCountId() {
+        return countId;
+    }
+
     public List<Task> getHistory() {
         return historyManager.getHistory();
     }
 
-    private void changeEpicStatus(Epic epic) {
+    void changeEpicStatus(Epic epic) {
         if (epic.getSubtasksForThisEpic().isEmpty()) {
             epic.setStatus(Status.NEW);
         } else {
