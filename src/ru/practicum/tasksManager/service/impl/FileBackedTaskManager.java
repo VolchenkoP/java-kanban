@@ -199,7 +199,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String status = String.valueOf(example.getStatus());
         String desc = example.getDescription();
         String epicIdForSub = "";
-        if (getSubtasks().contains(example)) {
+        if (example.getTypeOfTask().equals(TypeOfTask.SUBTASK)) {
             Subtask subtask = (Subtask) example;
             epicIdForSub = String.valueOf(subtask.getEpicIdForThisSubtask());
         }
