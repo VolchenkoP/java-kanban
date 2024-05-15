@@ -5,6 +5,7 @@ import ru.practicum.tasksManager.model.Subtask;
 import ru.practicum.tasksManager.model.Task;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TaskManager {
 
@@ -20,11 +21,11 @@ public interface TaskManager {
 
     List<Epic> getEpics();
 
-    Task getTaskById(int id);
+    Optional<Task> getTaskById(int id);
 
-    Subtask getSubtaskById(int id);
+    Optional<Subtask> getSubtaskById(int id);
 
-    Epic getEpicById(int id);
+    Optional<Epic> getEpicById(int id);
 
     void deleteById(int id);
 

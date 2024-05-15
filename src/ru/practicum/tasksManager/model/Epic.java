@@ -1,15 +1,21 @@
 package ru.practicum.tasksManager.model;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Epic extends Task {
     private final Map<Integer, Subtask> subtasksForThisEpic;
+    private LocalDateTime epicEndTime;
 
     public Epic(String name, String description) {
         super(name, description, Status.NEW);
 
         subtasksForThisEpic = new HashMap<>();
+    }
+
+    public void setEpicEndTime(LocalDateTime epicEndTime) {
+        this.epicEndTime = epicEndTime;
     }
 
     public void addSubtasksForThisEpic(Subtask subtask) {

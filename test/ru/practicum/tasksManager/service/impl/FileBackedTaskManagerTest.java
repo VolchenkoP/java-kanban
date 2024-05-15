@@ -12,13 +12,16 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class FileBackedTaskManagerTest {
+class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
     private final File file;
+    FileBackedTaskManager fileBackedTaskManager;
 
     {
         try {
@@ -30,12 +33,14 @@ class FileBackedTaskManagerTest {
 
     @Test
     void addNewTask() throws ManagerSaveException {
-        FileBackedTaskManager fileBackedTaskManager = Managers.getDefaultFileManager(file);
+        fileBackedTaskManager = Managers.getDefaultFileManager(file);
         Task task = new Task("Test addNewTask", "Test addNewTask description", Status.NEW);
+        task.setStartTime(LocalDateTime.now());
+        task.setDuration(Duration.ofMinutes(15));
         fileBackedTaskManager.saveTask(task);
 
         final int taskId = task.getId();
-        final Task savedTask = fileBackedTaskManager.getTaskById(taskId);
+        final Task savedTask = fileBackedTaskManager.getTaskById(taskId).get();
 
         assertNotNull(savedTask, "Задача не найдена.");
         assertEquals(task, savedTask, "Задачи не совпадают.");
@@ -56,23 +61,34 @@ class FileBackedTaskManagerTest {
     }
 
     @Test
-    void addNewEpic() {
-        FileBackedTaskManager fileBackedTaskManager = Managers.getDefaultFileManager(file);
+    void shouldBeCorrectLocalDateTimeSaveEpicToFile() {
+        fileBackedTaskManager = Managers.getDefaultFileManager(file);
 
         Epic epic = new Epic("Test addNewEpic", "Test addNewEpic description");
+        epic.setStartTime(LocalDateTime.now());
+        epic.setDuration(Duration.ofMinutes(15));
         fileBackedTaskManager.saveEpic(epic);
 
         final int epicId = epic.getId();
-        final Epic savedEpic = fileBackedTaskManager.getEpicById(epicId);
+        final Epic savedEpic = fileBackedTaskManager.getEpicById(epicId).get();
+        final LocalDateTime dateTimeEpicBeforeLoad = epic.getStartTime();
 
         assertNotNull(savedEpic, "Эпик не найден.");
         assertEquals(epic, savedEpic, "Эпики не совпадают.");
 
         final List<Epic> epics = fileBackedTaskManager.getEpics();
 
+        FileBackedTaskManager anotherFileBackManager = Managers.getLoadedFileManager(file);
+        final Epic epicFromFile = anotherFileBackManager.getEpics().get(0);
+        final LocalDateTime dateTimeEpicAfterLoad = epicFromFile.getStartTime();
+        final List<Epic> epicsAfterLoad = anotherFileBackManager.getEpics();
+
+
         assertNotNull(epics, "Эпики не возвращаются.");
         assertEquals(1, epics.size(), "Неверное количество эпиков.");
         assertEquals(epic, epics.getFirst(), "Эпики не совпадают.");
+        assertEquals(epics, epicsAfterLoad, "Эпики не совпадают");
+        assertEquals(dateTimeEpicBeforeLoad, dateTimeEpicAfterLoad, "Время старта эпика не сопадает");
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileBackedTaskManager.getFileToHistory()));
@@ -85,9 +101,11 @@ class FileBackedTaskManagerTest {
 
     @Test
     void deleteSubtask() {
-        FileBackedTaskManager fileBackedTaskManager = Managers.getDefaultFileManager(file);
+        fileBackedTaskManager = Managers.getDefaultFileManager(file);
         Epic epic = new Epic("Test addNewEpic", "Test addNewEpic description");
         Subtask subtask = new Subtask("Subtask1", "Desk1");
+        subtask.setStartTime(LocalDateTime.now());
+        subtask.setDuration(Duration.ofMinutes(15));
 
         fileBackedTaskManager.saveEpic(epic);
         subtask.setEpicIdForThisSubtask(epic.getId());
@@ -111,13 +129,22 @@ class FileBackedTaskManagerTest {
 
     @Test
     void createAndLoadTasksFromFile() {
-        Epic epic = new Epic("Test addNewEpic", "Test addNewEpic description");
-        FileBackedTaskManager fileBackedTaskManager = Managers.getDefaultFileManager(file);
-        fileBackedTaskManager.saveEpic(epic);
-        final List<Epic> forTest = fileBackedTaskManager.getEpics();
+        Task task = new Task("Test addNewEpic", "Test addNewEpic description", Status.NEW);
+        fileBackedTaskManager = Managers.getDefaultFileManager(file);
+        task.setStartTime(LocalDateTime.now());
+        task.setDuration(Duration.ofMinutes(15));
+        fileBackedTaskManager.saveTask(task);
+
+        final LocalDateTime startTimeBeforeSavingToFile = task.getStartTime();
+        final List<Task> forTest = fileBackedTaskManager.getTasks();
+
         FileBackedTaskManager fileBackedTaskManagerAnother = Managers.getLoadedFileManager(file);
-        final List<Epic> forTestAnother = fileBackedTaskManagerAnother.getEpics();
+
+        final List<Task> forTestAnother = fileBackedTaskManagerAnother.getTasks();
+        final LocalDateTime startTimeAfterSavingToFile = forTestAnother.getFirst().getStartTime();
+
         assertEquals(forTest, forTestAnother, "Списки не совпадают.");
+        assertEquals(startTimeBeforeSavingToFile, startTimeAfterSavingToFile, "Даты задач не совпадают");
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileBackedTaskManager.getFileToHistory()));

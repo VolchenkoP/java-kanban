@@ -5,15 +5,10 @@ import ru.practicum.tasksManager.model.Epic;
 import ru.practicum.tasksManager.model.Status;
 import ru.practicum.tasksManager.model.Subtask;
 import ru.practicum.tasksManager.model.Task;
-import ru.practicum.tasksManager.service.TaskManager;
-import ru.practicum.tasksManager.utilities.Managers;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class InMemoryTaskManagerTest {
+class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
 
     @Test
@@ -50,64 +45,6 @@ class InMemoryTaskManagerTest {
 
         assertEquals(subtaskOne, subtaskTwo, "Ошибка сравнения по ID");
 
-    }
-
-    @Test
-    void addNewTask() {
-        TaskManager taskManager = Managers.getDefault();
-        Task task = new Task("Test addNewTask", "Test addNewTask description", Status.NEW);
-        taskManager.saveTask(task);
-
-        final int taskId = task.getId();
-
-        final Task savedTask = taskManager.getTaskById(taskId);
-
-        assertNotNull(savedTask, "Задача не найдена.");
-        assertEquals(task, savedTask, "Задачи не совпадают.");
-
-        final List<Task> tasks = taskManager.getTasks();
-
-        assertNotNull(tasks, "Задачи не возвращаются.");
-        assertEquals(1, tasks.size(), "Неверное количество задач.");
-        assertEquals(task, tasks.getFirst(), "Задачи не совпадают.");
-    }
-
-    @Test
-    void addNewEpic() {
-        TaskManager taskManager = Managers.getDefault();
-        Epic epic = new Epic("Test addNewEpic", "Test addNewEpic description");
-        taskManager.saveEpic(epic);
-
-        final int epicId = epic.getId();
-
-        final Epic savedEpic = taskManager.getEpicById(epicId);
-
-        assertNotNull(savedEpic, "Задача не найдена.");
-        assertEquals(epic, savedEpic, "Задачи не совпадают.");
-
-        final List<Epic> epics = taskManager.getEpics();
-
-        assertNotNull(epics, "Задачи не возвращаются.");
-        assertEquals(1, epics.size(), "Неверное количество задач.");
-        assertEquals(epic, epics.getFirst(), "Задачи не совпадают.");
-    }
-
-    @Test
-    void deleteSubtask() {
-        TaskManager taskManager = Managers.getDefault();
-        Epic epic = new Epic("Test addNewEpic", "Test addNewEpic description");
-        Subtask subtask = new Subtask("Subtask1", "Desk1");
-
-        taskManager.saveEpic(epic);
-        subtask.setEpicIdForThisSubtask(epic.getId());
-
-        taskManager.saveSubtask(subtask);
-
-        taskManager.deleteById(epic.getId());
-        final int checkSubtasksListSize = taskManager.getSubtasks().size();
-
-        assertEquals(0, checkSubtasksListSize, "После удаления эпика подзадача "
-                + "не удалилась");
     }
 
 }
