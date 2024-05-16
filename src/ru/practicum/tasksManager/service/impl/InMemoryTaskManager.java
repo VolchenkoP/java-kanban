@@ -151,7 +151,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateTask(Task task) {
-        if(tasks.containsKey(task.getId())) {
+        if (tasks.containsKey(task.getId())) {
             if (!validateStartTimeForTask(task)) {
                 System.out.println("Невозможно обновить задачу - новое время пересекается с существующей задачей");
                 return;
@@ -185,10 +185,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateEpic(Epic epic) {
-        if (epics.containsKey(epic.getId())){
-        Epic epicLink = epics.get(epic.getId());
-        epicLink.setName(epic.getName());
-        epicLink.setDescription(epic.getDescription());
+        if (epics.containsKey(epic.getId())) {
+            Epic epicLink = epics.get(epic.getId());
+            epicLink.setName(epic.getName());
+            epicLink.setDescription(epic.getDescription());
         }
     }
 
