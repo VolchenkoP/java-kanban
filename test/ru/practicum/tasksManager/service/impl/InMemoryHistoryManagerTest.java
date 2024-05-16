@@ -28,7 +28,7 @@ class InMemoryHistoryManagerTest {
 
 
     @Test
-    void delete() {
+    void shouldReturnEmptyHistoryListAfterDeleteTaskAfterSave() {
         HistoryManager historyManager = Managers.getDefaultHistory();
         Task task = new Task("Test addNewTask", "Test addNewTask description", Status.NEW);
         historyManager.addToHistory(task);

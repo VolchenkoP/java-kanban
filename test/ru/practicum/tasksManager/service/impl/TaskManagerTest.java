@@ -72,7 +72,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
         final int taskId = task.getId();
 
-        final Task savedTask = taskManager.getTaskById(taskId).get();
+        final Task savedTask = taskManager.getTaskById(taskId);
 
         assertNotNull(savedTask, "Задача не найдена.");
         assertEquals(task, savedTask, "Задачи не совпадают.");
@@ -92,7 +92,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
         final int epicId = epic.getId();
 
-        final Epic savedEpic = taskManager.getEpicById(epicId).get();
+        final Epic savedEpic = taskManager.getEpicById(epicId);
 
         assertNotNull(savedEpic, "Задача не найдена.");
         assertEquals(epic, savedEpic, "Задачи не совпадают.");
@@ -117,7 +117,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
         taskManager.saveSubtask(subtask);
 
-        taskManager.deleteById(epic.getId());
+        taskManager.deleteEpicById(epic.getId());
         final int checkSubtasksListSize = taskManager.getSubtasks().size();
 
         assertEquals(0, checkSubtasksListSize, "После удаления эпика подзадача "

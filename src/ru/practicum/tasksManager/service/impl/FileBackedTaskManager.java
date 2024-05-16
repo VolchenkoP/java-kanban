@@ -7,7 +7,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final String header;
@@ -67,29 +66,41 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public Optional<Task> getTaskById(int id) {
-        Task task = super.getTaskById(id).get();
+    public Task getTaskById(int id) {
+        Task task = super.getTaskById(id);
         save();
-        return Optional.of(task);
+        return task;
     }
 
     @Override
-    public Optional<Subtask> getSubtaskById(int id) {
-        Subtask subtask = super.getSubtaskById(id).get();
+    public Subtask getSubtaskById(int id) {
+        Subtask subtask = super.getSubtaskById(id);
         save();
-        return Optional.of(subtask);
+        return subtask;
     }
 
     @Override
-    public Optional<Epic> getEpicById(int id) {
-        Epic epic = super.getEpicById(id).get();
+    public Epic getEpicById(int id) {
+        Epic epic = super.getEpicById(id);
         save();
-        return Optional.of(epic);
+        return epic;
     }
 
     @Override
-    public void deleteById(int id) {
-        super.deleteById(id);
+    public void deleteTaskById(int id) {
+        super.deleteTaskById(id);
+        save();
+    }
+
+    @Override
+    public void deleteEpicById(int id) {
+        super.deleteEpicById(id);
+        save();
+    }
+
+    @Override
+    public void deleteSubtaskById(int id) {
+        super.deleteSubtaskById(id);
         save();
     }
 
@@ -159,8 +170,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     }
                 });
 
-                changeEpicStatus(epic);
-                changeEpicEndTime(epic);
+                setEpicForChangeStatusEndTime(epic);
                 epic.setTypeOfTask(TypeOfTask.EPIC);
                 epics.put(id, epic);
                 break;
@@ -178,8 +188,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     return;
                 }
                 epicSaved.addSubtasksForThisEpic(subtask);
-                changeEpicStatus(epicSaved);
-                changeEpicEndTime(epicSaved);
+                setEpicForChangeStatusEndTime(epicSaved);
         }
     }
 

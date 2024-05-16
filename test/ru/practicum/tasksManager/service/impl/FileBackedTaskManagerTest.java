@@ -40,7 +40,7 @@ class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
         fileBackedTaskManager.saveTask(task);
 
         final int taskId = task.getId();
-        final Task savedTask = fileBackedTaskManager.getTaskById(taskId).get();
+        final Task savedTask = fileBackedTaskManager.getTaskById(taskId);
 
         assertNotNull(savedTask, "Задача не найдена.");
         assertEquals(task, savedTask, "Задачи не совпадают.");
@@ -70,7 +70,7 @@ class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
         fileBackedTaskManager.saveEpic(epic);
 
         final int epicId = epic.getId();
-        final Epic savedEpic = fileBackedTaskManager.getEpicById(epicId).get();
+        final Epic savedEpic = fileBackedTaskManager.getEpicById(epicId);
         final LocalDateTime dateTimeEpicBeforeLoad = epic.getStartTime();
 
         assertNotNull(savedEpic, "Эпик не найден.");
@@ -112,7 +112,7 @@ class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
 
         fileBackedTaskManager.saveSubtask(subtask);
 
-        fileBackedTaskManager.deleteById(epic.getId());
+        fileBackedTaskManager.deleteEpicById(epic.getId());
         final int checkSubtasksListSize = fileBackedTaskManager.getSubtasks().size();
 
         assertEquals(0, checkSubtasksListSize, "После удаления эпика подзадача "

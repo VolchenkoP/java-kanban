@@ -175,14 +175,14 @@ public class Main {
         System.out.println(fileTaskManager2.getTasks());
         System.out.println(fileTaskManager2.getEpics());
         System.out.println(fileTaskManager2.getSubtasks());
-        System.out.println("Subtasks by Epic1 after load" + fileTaskManager2.getEpicById(4).get().getSubtasksForThisEpic().values());
+        System.out.println("Subtasks by Epic1 after load" + fileTaskManager2.getEpicById(4).getSubtasksForThisEpic().values());
 
         subtask1.setStatus(Status.DONE);
         fileTaskManager2.updateSubtask(subtask1);
         System.out.println("Subtasks after update st1 status: " + fileTaskManager2.getSubtasks());
         System.out.println("Epics after update st1 status: " + fileTaskManager2.getEpics());
 
-        fileTaskManager2.deleteById(6);
+        fileTaskManager2.deleteSubtaskById(6);
         System.out.println("Subtasks after delete st1 :" + fileTaskManager2.getSubtasks());
         System.out.println("Epics after delete st1: " + fileTaskManager2.getEpics());
 
