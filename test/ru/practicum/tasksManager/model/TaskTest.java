@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class TaskTest {
 
     @Test
-    void addNewTask() {
+    void saveTaskShouldSuccessfullySaveTaskTest() {
         TaskManager taskManager = Managers.getDefault();
         Task task = new Task("Test addNewTask", "Test addNewTask description", Status.NEW);
         taskManager.saveTask(task);

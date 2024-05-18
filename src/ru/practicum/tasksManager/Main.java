@@ -5,6 +5,7 @@ import ru.practicum.tasksManager.model.Status;
 import ru.practicum.tasksManager.model.Subtask;
 import ru.practicum.tasksManager.model.Task;
 import ru.practicum.tasksManager.service.impl.FileBackedTaskManager;
+import ru.practicum.tasksManager.service.impl.InMemoryTaskManager;
 import ru.practicum.tasksManager.utilities.Managers;
 
 import java.io.File;
@@ -169,6 +170,9 @@ public class Main {
 
         System.out.println();
         System.out.println("History: " + fileTaskManager.getHistory());
+        System.out.println("Tasks: " + fileTaskManager.getTasks());
+        fileTaskManager.deleteTaskById(fileTaskManager.getTaskById(1).getId());
+        System.out.println("TasksAfterDeleteT1 :" + fileTaskManager.getTasks());
 
         FileBackedTaskManager fileTaskManager2 = Managers.getLoadedFileManager(file);
 
@@ -185,6 +189,23 @@ public class Main {
         fileTaskManager2.deleteSubtaskById(6);
         System.out.println("Subtasks after delete st1 :" + fileTaskManager2.getSubtasks());
         System.out.println("Epics after delete st1: " + fileTaskManager2.getEpics());
+
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+
+        Epic epic = new Epic("Epic1", "Desc1");
+
+        Subtask subtask = new Subtask("Subtask1", "Desk1");
+        subtask.setStartTime(LocalDateTime.now().plusMinutes(new Random().nextInt(100)));
+        subtask.setDuration(Duration.ofMinutes(15));
+
+        taskManager.saveEpic(epic);
+        subtask.setEpicIdForThisSubtask(epic.getId());
+        taskManager.saveSubtask(subtask);
+        System.out.println("Subtask before update: " + taskManager.getSubtaskById(subtask.getId()));
+        subtask.setStatus(Status.IN_PROGRESS);
+        taskManager.updateSubtask(subtask);
+        System.out.println("Subtask after update: " + taskManager.getSubtaskById(subtask.getId()));
+
 
     }
 

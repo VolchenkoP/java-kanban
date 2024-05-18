@@ -65,6 +65,23 @@ public class Task implements Cloneable {
         return startTime == null ? null : startTime.plusMinutes(duration.toMinutes());
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        String formattedLocalDateTime = startTime.format(DATE_TIME_FORMATTER);
+        this.startTime = LocalDateTime.parse(formattedLocalDateTime, DATE_TIME_FORMATTER);
+    }
+
     @Override
     public String toString() {
         return getClass() + "{" +
@@ -97,20 +114,4 @@ public class Task implements Cloneable {
         }
     }
 
-    public Duration getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Duration duration) {
-        this.duration = duration;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        String formattedLocalDateTime = startTime.format(DATE_TIME_FORMATTER);
-        this.startTime = LocalDateTime.parse(formattedLocalDateTime, DATE_TIME_FORMATTER);
-    }
 }

@@ -9,7 +9,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ManagerSaveExceptionTest {
-    File file;
+    final File file;
 
     {
         try {
@@ -20,7 +20,7 @@ class ManagerSaveExceptionTest {
     }
 
     @Test
-    void shouldBeCorrectCatchException() {
+    void assertThrowsShouldSuccessfullyWriteToFileTest() {
         assertThrows(ManagerSaveException.class, () -> {
             try (FileWriter writer = new FileWriter(file.getAbsolutePath())) {
                 writer.write("Some string\n");

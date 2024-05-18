@@ -14,10 +14,6 @@ public class Epic extends Task {
         subtasksForThisEpic = new HashMap<>();
     }
 
-    public void setEpicEndTime(LocalDateTime epicEndTime) {
-        this.epicEndTime = epicEndTime;
-    }
-
     public void addSubtasksForThisEpic(Subtask subtask) {
         if (!subtasksForThisEpic.containsKey(subtask.getId())) {
             subtasksForThisEpic.put(subtask.getId(), subtask);
@@ -38,4 +34,12 @@ public class Epic extends Task {
         return subtasksForThisEpic;
     }
 
+    public LocalDateTime getEpicEndTime() {
+        return epicEndTime;
+    }
+
+    public void setEpicEndTime(LocalDateTime epicEndTime) {
+        String formattedLocalDateTime = epicEndTime.format(DATE_TIME_FORMATTER);
+        this.epicEndTime = LocalDateTime.parse(formattedLocalDateTime, DATE_TIME_FORMATTER);
+    }
 }

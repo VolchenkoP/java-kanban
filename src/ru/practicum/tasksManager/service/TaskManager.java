@@ -44,11 +44,10 @@ public interface TaskManager {
 
     void deleteEpics();
 
-    int getCountId();
-
     List<Subtask> getAllSubtasksByEpic(int id);
 
     List<Task> getHistory();
 
+    List<Task> getPrioritizedTasks();
 
 }

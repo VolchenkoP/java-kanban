@@ -9,15 +9,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class ManagersTest {
 
     @Test
-    void newTaskManager() {
-        TaskManager taskManager = Managers.getDefault();
+    void createTaskManagerShouldSuccessfullyCreateTaskManagerFromManagersTest() {
+        final TaskManager taskManager = Managers.getDefault();
 
         assertNotNull(taskManager, "Менеджер не проинициализирован");
     }
 
     @Test
-    void newHistoryManager() {
-        HistoryManager historyManager = Managers.getDefaultHistory();
+    void createHistoryManagerShouldSuccessfullyCreateHistoryManagerFromManagersTest() {
+        final HistoryManager historyManager = Managers.getDefaultHistory();
 
         assertNotNull(historyManager, "Менеджер не проинициализирован");
     }
