@@ -26,7 +26,11 @@ public interface TaskManager {
 
     Epic getEpicById(int id);
 
-    void deleteById(int id);
+    void deleteTaskById(int id);
+
+    void deleteEpicById(int id);
+
+    void deleteSubtaskById(int id);
 
     void updateTask(Task task);
 
@@ -40,11 +44,10 @@ public interface TaskManager {
 
     void deleteEpics();
 
-    int getCountId();
-
     List<Subtask> getAllSubtasksByEpic(int id);
 
     List<Task> getHistory();
 
+    List<Task> getPrioritizedTasks();
 
 }

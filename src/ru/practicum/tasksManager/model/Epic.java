@@ -1,10 +1,12 @@
 package ru.practicum.tasksManager.model;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Epic extends Task {
     private final Map<Integer, Subtask> subtasksForThisEpic;
+    private LocalDateTime epicEndTime;
 
     public Epic(String name, String description) {
         super(name, description, Status.NEW);
@@ -32,4 +34,12 @@ public class Epic extends Task {
         return subtasksForThisEpic;
     }
 
+    public LocalDateTime getEpicEndTime() {
+        return epicEndTime;
+    }
+
+    public void setEpicEndTime(LocalDateTime epicEndTime) {
+        String formattedLocalDateTime = epicEndTime.format(DATE_TIME_FORMATTER);
+        this.epicEndTime = LocalDateTime.parse(formattedLocalDateTime, DATE_TIME_FORMATTER);
+    }
 }

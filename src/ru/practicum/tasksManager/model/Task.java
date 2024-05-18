@@ -1,13 +1,19 @@
 package ru.practicum.tasksManager.model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Task implements Cloneable {
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd.MM.yy");
     private String name;
     private String description;
     private int id;
     private Status status;
     private TypeOfTask type;
+    private Duration duration;
+    private LocalDateTime startTime;
 
     public Task(String name, String description, Status status) {
         this.name = name;
@@ -55,6 +61,27 @@ public class Task implements Cloneable {
         this.type = typeOfTask;
     }
 
+    public LocalDateTime getEndTime() {
+        return startTime == null ? null : startTime.plusMinutes(duration.toMinutes());
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        String formattedLocalDateTime = startTime.format(DATE_TIME_FORMATTER);
+        this.startTime = LocalDateTime.parse(formattedLocalDateTime, DATE_TIME_FORMATTER);
+    }
+
     @Override
     public String toString() {
         return getClass() + "{" +
@@ -75,7 +102,7 @@ public class Task implements Cloneable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, id, status);
+        return Objects.hash(id);
     }
 
     @Override
