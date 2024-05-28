@@ -25,7 +25,7 @@ public class HttpTaskServer {
     public static void main(String[] args) throws IOException {
         HttpTaskServer httpTaskServer = new HttpTaskServer(Managers.getDefault());
         httpTaskServer.start();
-        //httpTaskServer.stop();
+        httpTaskServer.stop();
     }
 
     public void start() {

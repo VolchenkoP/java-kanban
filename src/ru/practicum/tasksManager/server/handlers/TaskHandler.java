@@ -76,8 +76,7 @@ public class TaskHandler implements HttpHandler {
             String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
             Task reqToAddTask = gson.fromJson(body, Task.class);
             manager.saveTask(reqToAddTask);
-            Task addedTask = reqToAddTask;
-            if (addedTask != null) {
+            if (reqToAddTask.getId() != 0) {
                 System.out.println("Задача создана");
                 exchange.sendResponseHeaders(ResponseCode.CREATED.getCode(), 0);
                 exchange.close();
@@ -93,8 +92,7 @@ public class TaskHandler implements HttpHandler {
                 String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
                 Task reqToUpdTask = gson.fromJson(body, Task.class);
                 manager.updateTask(reqToUpdTask);
-                Task updTask = reqToUpdTask;
-                if (updTask != null) {
+                if (reqToUpdTask.getId() != 0) {
                     System.out.println("Задача обновлена");
                     exchange.sendResponseHeaders(ResponseCode.CREATED.getCode(), 0);
                     exchange.close();

@@ -77,8 +77,7 @@ public class EpicHandler implements HttpHandler {
             String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
             Epic reqToEpic = gson.fromJson(body, Epic.class);
             manager.saveEpic(reqToEpic);
-            Epic addedEpic = reqToEpic;
-            if (addedEpic != null) {
+            if (reqToEpic.getId() != 0) {
                 System.out.println("Эпик создан");
                 exchange.sendResponseHeaders(ResponseCode.CREATED.getCode(), 0);
                 exchange.close();

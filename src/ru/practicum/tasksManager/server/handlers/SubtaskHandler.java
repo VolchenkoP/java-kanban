@@ -77,8 +77,7 @@ public class SubtaskHandler implements HttpHandler {
             String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
             Subtask reqToAddSubTask = gson.fromJson(body, Subtask.class);
             manager.saveSubtask(reqToAddSubTask);
-            Subtask addedSubTask = reqToAddSubTask;
-            if (addedSubTask != null) {
+            if (reqToAddSubTask.getId() != 0) {
                 System.out.println("Подзадача создана");
                 exchange.sendResponseHeaders(ResponseCode.CREATED.getCode(), 0);
                 exchange.close();
@@ -94,8 +93,7 @@ public class SubtaskHandler implements HttpHandler {
                 String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
                 Subtask subTaskRequest = gson.fromJson(body, Subtask.class);
                 manager.updateSubtask(subTaskRequest);
-                Subtask addedSubTask = subTaskRequest;
-                if (addedSubTask != null) {
+                if (subTaskRequest.getId() != 0) {
                     System.out.println("Подзадача обновлена");
                     exchange.sendResponseHeaders(ResponseCode.CREATED.getCode(), 0);
                     exchange.close();
