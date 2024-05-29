@@ -21,6 +21,14 @@ public class Task implements Cloneable {
         this.status = status;
     }
 
+    public Task(String name, String description, Status status, LocalDateTime startTime, Duration duration) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
+    }
+
     public int getId() {
         return id;
     }
@@ -84,12 +92,16 @@ public class Task implements Cloneable {
 
     @Override
     public String toString() {
-        return getClass() + "{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                ", status=" + status +
-                '}';
+        String toString = Integer.toString(getId()) +
+                ',' + getTypeOfTask() +
+                "," + name +
+                "," + status +
+                "," + description;
+        if (duration.toMinutes() == 0) {
+            return toString + "," + duration + "," + null;
+        } else {
+            return toString + "," + duration + "," + startTime;
+        }
     }
 
     @Override

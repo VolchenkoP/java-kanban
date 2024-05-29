@@ -21,7 +21,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void removeFromHistory(int id) {
-        Node node = requestHistory.get(id);
         removeNode(requestHistory.remove(id));
     }
 
@@ -73,9 +72,9 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private static class Node {
-        public Task task;
-        public Node next;
-        public Node prev;
+        private Task task;
+        private Node next;
+        private Node prev;
 
         public Node(Node prev, Task task, Node next) {
             this.prev = prev;

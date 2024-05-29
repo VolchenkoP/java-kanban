@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
-    final Map<Integer, Task> tasks;
-    final Map<Integer, Subtask> subtasks;
-    final Map<Integer, Epic> epics;
-    final HistoryManager historyManager;
-    int countId;
-    TreeSet<Task> tasksByStartTime;
+    protected final Map<Integer, Task> tasks;
+    protected final Map<Integer, Subtask> subtasks;
+    protected final Map<Integer, Epic> epics;
+    protected final HistoryManager historyManager;
+    protected final TreeSet<Task> tasksByStartTime;
+    protected int countId;
 
     public InMemoryTaskManager() {
         tasks = new HashMap<>();
@@ -303,7 +303,6 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private boolean validateStartTimeForTask(Task task) {
-        TypeOfTask type = task.getTypeOfTask();
         boolean check = false;
         switch (task.getTypeOfTask()) {
             case TASK:
